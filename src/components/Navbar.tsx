@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import { Download } from "lucide-react";
 import { useLanguage } from "@/context/LanguageContext";
 import { ui, profile } from "@/data/content";
 import LanguageToggle from "./LanguageToggle";
@@ -16,87 +17,46 @@ const navItems = [
 export default function Navbar() {
   const { lang } = useLanguage();
   const [scrolled, setScrolled] = useState(false);
-  const [activeSection, setActiveSection] = useState<string>("");
 
   useEffect(() => {
-    const onScroll = () => {
-      setScrolled(window.scrollY > 20);
-
-      // Find current section in view
-      const sections = navItems.map((item) =>
-        document.getElementById(item.id)
-      );
-      const scrollPos = window.scrollY + 120;
-
-      for (let i = sections.length - 1; i >= 0; i--) {
-        const section = sections[i];
-        if (section && section.offsetTop <= scrollPos) {
-          setActiveSection(navItems[i].id);
-          break;
-        }
-      }
-    };
-
+    const onScroll = () => setScrolled(window.scrollY > 40);
     onScroll();
     window.addEventListener("scroll", onScroll, { passive: true });
     return () => window.removeEventListener("scroll", onScroll);
   }, []);
 
   return (
-    <header
-      className={`fixed top-0 inset-x-0 z-50 transition-all duration-300 ${
-        scrolled
-          ? "bg-bg/80 backdrop-blur-md border-b border-border"
-          : "bg-transparent"
-      }`}
-    >
-      <nav className="max-w-6xl mx-auto px-6 lg:px-10 h-16 flex items-center justify-between">
-        {/* Logo */}
-        <a
-          href="#home"
-          className="font-mono text-sm flex items-center gap-2 group"
-        >
-          <span className="text-accent">~/</span>
-          <span className="text-text-primary group-hover:text-accent transition-colors">
-            {profile.githubHandle}
-          </span>
-        </a>
+    <nav className={`nav${scrolled ? " scrolled" : ""}`}>
+      <a className="nav-brand" href="#top">
+        <span className="nav-brand-mark">
+          <span>{profile.seal}</span>
+        </span>
+        <span>
+          minh phương<span style={{ opacity: 0.5 }}>.dev</span>
+        </span>
+      </a>
 
-        {/* Desktop nav */}
-        <ul className="hidden md:flex items-center gap-1 font-mono text-[12.5px]">
-          {navItems.map((item, idx) => (
-            <li key={item.id}>
-              <a
-                href={`#${item.id}`}
-                className={`px-3 py-1.5 transition-colors ${
-                  activeSection === item.id
-                    ? "text-accent"
-                    : "text-text-secondary hover:text-text-primary"
-                }`}
-              >
-                <span className="text-text-muted mr-1">
-                  0{idx + 1}.
-                </span>
-                {ui.nav[item.key][lang]}
-              </a>
-            </li>
-          ))}
-        </ul>
-
-        {/* Right side: language + resume */}
-        <div className="flex items-center gap-3">
-          <LanguageToggle />
-          <a
-            href={profile.resumeUrl}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="hidden sm:inline-flex font-mono text-[11.5px] px-3 py-1.5 border border-accent/30 text-accent hover:bg-accent/10 transition-colors"
-          >
-            {ui.labels.downloadCv[lang]}
-            <span className="ml-1.5">↗</span>
+      <div className="nav-links">
+        {navItems.map((item) => (
+          <a key={item.id} className="nav-link" href={`#${item.id}`}>
+            {ui.nav[item.key][lang]}
           </a>
-        </div>
-      </nav>
-    </header>
+        ))}
+      </div>
+
+      <div style={{ display: "flex", alignItems: "center", gap: 10 }}>
+        <LanguageToggle />
+        <a
+          className="nav-cta"
+          href={profile.resumeUrl}
+          target="_blank"
+          rel="noopener noreferrer"
+          download
+        >
+          <Download size={13} />
+          {ui.labels.downloadCv[lang]}
+        </a>
+      </div>
+    </nav>
   );
 }

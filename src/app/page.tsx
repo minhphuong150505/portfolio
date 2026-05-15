@@ -6,12 +6,12 @@ import Projects from "@/components/Projects";
 import Education from "@/components/Education";
 import Contact from "@/components/Contact";
 import Footer from "@/components/Footer";
-import BackgroundGrid from "@/components/BackgroundGrid";
+import Reveal from "@/components/Reveal";
 
 export default function Home() {
   return (
     <>
-      <BackgroundGrid />
+      <Reveal />
       <Navbar />
       <main className="relative">
         <Hero />

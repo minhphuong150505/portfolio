@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { JetBrains_Mono, IBM_Plex_Sans } from "next/font/google";
+import { JetBrains_Mono, IBM_Plex_Sans, Lora } from "next/font/google";
 import "./globals.css";
 import { LanguageProvider } from "@/context/LanguageContext";
 
@@ -17,10 +17,18 @@ const ibmPlex = IBM_Plex_Sans({
   weight: ["300", "400", "500", "600", "700"],
 });
 
+const lora = Lora({
+  subsets: ["latin", "vietnamese"],
+  variable: "--font-lora",
+  display: "swap",
+  weight: ["400", "500", "600", "700"],
+  style: ["normal", "italic"],
+});
+
 export const metadata: Metadata = {
   title: "Nguyễn Minh Phương — Backend Developer",
   description:
-    "Backend Developer turning ideas into production-ready APIs. Java Spring Boot, REST APIs, MySQL/PostgreSQL, Docker, GCP.",
+    "Backend Developer · Java · Spring Boot · REST APIs. Portfolio of Nguyễn Minh Phương.",
   keywords: [
     "Backend Developer",
     "Java",
@@ -46,8 +54,13 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" className={`${jetbrainsMono.variable} ${ibmPlex.variable}`}>
-      <body className="font-sans antialiased noise">
+    <html
+      lang="vi"
+      data-accent="gold"
+      data-motif="stars"
+      className={`${jetbrainsMono.variable} ${ibmPlex.variable} ${lora.variable}`}
+    >
+      <body>
         <LanguageProvider>{children}</LanguageProvider>
       </body>
     </html>

@@ -1,7 +1,6 @@
 "use client";
 
-import { motion } from "framer-motion";
-import { ArrowDown, MapPin } from "lucide-react";
+import { Download, Mail, Github } from "lucide-react";
 import { useLanguage } from "@/context/LanguageContext";
 import { profile, tagline, ui } from "@/data/content";
 
@@ -9,118 +8,161 @@ export default function Hero() {
   const { lang } = useLanguage();
 
   return (
-    <section
-      id="home"
-      className="relative min-h-screen flex items-center pt-24 pb-12"
-    >
-      <div className="max-w-6xl mx-auto px-6 lg:px-10 w-full">
-        {/* Terminal-style prompt */}
-        <motion.div
-          initial={{ opacity: 0, y: 10 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6, delay: 0.1 }}
-          className="font-mono text-[13px] text-text-tertiary mb-6 flex items-center gap-2"
-        >
-          <span className="text-spring">$</span>
-          <span>whoami</span>
-          <span className="terminal-cursor" />
-        </motion.div>
-
-        {/* Name */}
-        <motion.h1
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.7, delay: 0.25 }}
-          className="text-[clamp(2.5rem,7vw,5.5rem)] font-bold tracking-tight leading-[1.05] mb-3"
-        >
-          <span className="block text-text-primary">{profile.name}.</span>
-        </motion.h1>
-
-        {/* Role + stack */}
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.7, delay: 0.4 }}
-          className="text-[clamp(1.25rem,3vw,2rem)] text-text-secondary font-light tracking-tight mb-8 flex flex-wrap items-baseline gap-x-3"
-        >
-          <span>{profile.role[lang]}</span>
-          <span className="text-text-muted">·</span>
-          <span className="font-mono text-accent text-[clamp(0.9rem,1.8vw,1.15rem)]">
-            {profile.stack}
-          </span>
-        </motion.div>
-
-        {/* Tagline */}
-        <motion.p
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.7, delay: 0.55 }}
-          className="text-text-secondary text-base sm:text-lg max-w-2xl leading-relaxed mb-10"
-        >
-          {tagline[lang]}
-        </motion.p>
-
-        {/* Meta info row */}
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.7, delay: 0.7 }}
-          className="flex flex-wrap items-center gap-x-6 gap-y-3 font-mono text-[12.5px] text-text-tertiary mb-12"
-        >
-          <span className="flex items-center gap-1.5">
-            <MapPin size={13} className="text-accent" />
-            {profile.location[lang]}
-          </span>
-
-          <span className="flex items-center gap-2">
-            <span className="relative flex h-2 w-2">
-              <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-spring opacity-75" />
-              <span className="relative inline-flex rounded-full h-2 w-2 bg-spring" />
+    <section className="hero" id="top">
+      <div className="container-x">
+        <div className="hero-grid">
+          <div>
+            <span className="hero-eyebrow reveal">
+              <span className="dot" />
+              {ui.labels.available[lang]}
             </span>
-            <span className="text-text-secondary">
-              {ui.labels.availableFor[lang]}
-            </span>
-          </span>
-        </motion.div>
 
-        {/* CTAs */}
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.7, delay: 0.85 }}
-          className="flex flex-wrap items-center gap-3"
-        >
-          <a
-            href="#projects"
-            className="group inline-flex items-center gap-2 px-5 py-2.5 bg-accent text-bg font-mono text-[13px] font-medium hover:bg-accent/90 transition-colors"
-          >
-            <span>{ui.nav.projects[lang]}.view()</span>
-            <ArrowDown
-              size={14}
-              className="group-hover:translate-y-0.5 transition-transform"
-            />
-          </a>
-          <a
-            href="#contact"
-            className="inline-flex items-center gap-2 px-5 py-2.5 border border-border hover:border-accent/40 text-text-secondary hover:text-accent font-mono text-[13px] transition-colors"
-          >
-            <span>{ui.labels.sayHello[lang]}()</span>
-          </a>
-        </motion.div>
+            <h1 className="hero-name reveal">
+              <span className="first">{profile.firstName}</span>
+              <span className="last">{profile.lastName}</span>
+            </h1>
 
-        {/* Scroll indicator */}
-        <motion.div
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ duration: 1, delay: 1.5 }}
-          className="absolute bottom-8 left-1/2 -translate-x-1/2 hidden lg:flex flex-col items-center gap-2 text-text-muted"
-        >
-          <span className="font-mono text-[10px] tracking-widest uppercase">
-            scroll
-          </span>
-          <div className="w-px h-12 bg-gradient-to-b from-text-muted to-transparent" />
-        </motion.div>
+            <div className="hero-role reveal">
+              <span className="hero-role-chip">
+                <span className="gold">›</span>{" "}
+                <strong>{profile.role[lang]}</strong>
+              </span>
+              <span className="hero-stack-line">
+                Java<span className="sep">·</span>Spring Boot
+                <span className="sep">·</span>REST APIs
+              </span>
+            </div>
+
+            <p className="hero-tagline reveal">{tagline[lang]}</p>
+
+            <div className="hero-meta reveal">
+              <span>
+                <span className="key">loc:</span> {profile.location[lang]}
+              </span>
+              <span>
+                <span className="key">edu:</span> UIT — VNU-HCM
+              </span>
+              <span>
+                <span className="key">status:</span>{" "}
+                <span className="jade">{ui.labels.openToWork[lang]}</span>
+              </span>
+            </div>
+
+            <div className="hero-ctas reveal">
+              <a
+                className="btn btn-primary"
+                href={profile.resumeUrl}
+                target="_blank"
+                rel="noopener noreferrer"
+                download
+              >
+                <Download size={14} /> {ui.labels.downloadCv[lang]}
+              </a>
+              <a className="btn btn-ghost" href="#contact">
+                <Mail size={14} /> {ui.labels.sayHello[lang]}
+              </a>
+              <a
+                className="btn btn-ghost"
+                href={profile.github}
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                <Github size={14} /> GitHub
+              </a>
+            </div>
+          </div>
+
+          <div className="seal-wrap reveal">
+            <Seal />
+          </div>
+        </div>
       </div>
     </section>
+  );
+}
+
+function Seal() {
+  return (
+    <div className="seal">
+      <div className="seal-ring r1" />
+      <div className="seal-ring r2" />
+      <div className="seal-ring r3" />
+
+      <svg className="seal-text-ring" viewBox="0 0 200 200" aria-hidden="true">
+        <defs>
+          <path
+            id="seal-circ"
+            d="M 100, 100 m -82, 0 a 82,82 0 1,1 164,0 a 82,82 0 1,1 -164,0"
+          />
+        </defs>
+        <text>
+          <textPath href="#seal-circ" startOffset="0%">
+            BACKEND · ENGINEER · JAVA · SPRING · REST · DOCKER · POSTGRES ·{" "}
+          </textPath>
+        </text>
+      </svg>
+
+      <div className="orbit-tag tag-tl">
+        <span>{"{ }"}</span> JSON
+      </div>
+      <div className="orbit-tag tag-tr">
+        JWT <span className="dot" />
+      </div>
+      <div className="orbit-tag tag-bl">
+        SQL <span className="dot" />
+      </div>
+      <div className="orbit-tag tag-br">
+        <span>›_</span> API
+      </div>
+
+      <div className="seal-core">
+        <div className="seal-status">
+          <span className="led" /> LIVE
+        </div>
+        <div className="seal-mono">
+          <span className="sheen">{profile.initials}</span>
+        </div>
+        <div className="seal-bars" aria-hidden="true">
+          <span />
+          <span />
+          <span />
+          <span />
+          <span />
+          <span />
+          <span />
+        </div>
+      </div>
+
+      <Console />
+    </div>
+  );
+}
+
+function Console() {
+  return (
+    <div className="console-card">
+      <div className="console-bar">
+        <span className="console-dot r" />
+        <span className="console-dot y" />
+        <span className="console-dot g" />
+        <span className="console-title">~/minhphuong — bash</span>
+      </div>
+      <div className="console-line">
+        <span className="prompt">$</span> whoami
+      </div>
+      <div className="console-line">
+        <span className="out">→ backend.engineer@uit</span>
+      </div>
+      <div className="console-line">
+        <span className="prompt">$</span> curl /api/status
+      </div>
+      <div className="console-line">
+        <span className="out">→ {"{ "}</span>
+        <span className="ok">&quot;available&quot;</span>
+        <span className="out">: </span>
+        <span className="ok">true</span>
+        <span className="out">{" }"}</span>
+      </div>
+    </div>
   );
 }

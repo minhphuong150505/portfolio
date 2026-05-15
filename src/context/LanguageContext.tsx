@@ -21,18 +21,20 @@ const LanguageContext = createContext<LanguageContextType | undefined>(
 );
 
 export function LanguageProvider({ children }: { children: ReactNode }) {
-  const [lang, setLangState] = useState<Lang>("en");
+  const [lang, setLangState] = useState<Lang>("vi");
 
   useEffect(() => {
     const saved = localStorage.getItem("portfolio-lang") as Lang | null;
     if (saved === "en" || saved === "vi") {
       setLangState(saved);
     }
+    document.documentElement.setAttribute("lang", saved ?? "vi");
   }, []);
 
   const setLang = (newLang: Lang) => {
     setLangState(newLang);
     localStorage.setItem("portfolio-lang", newLang);
+    document.documentElement.setAttribute("lang", newLang);
   };
 
   const toggleLang = () => setLang(lang === "en" ? "vi" : "en");

@@ -1,90 +1,64 @@
 "use client";
 
-import { motion } from "framer-motion";
 import { useLanguage } from "@/context/LanguageContext";
-import { about, ui } from "@/data/content";
+import { about, profile, ui } from "@/data/content";
 import SectionHeader from "./SectionHeader";
 
 export default function About() {
   const { lang } = useLanguage();
+  const paras = about[lang];
 
   return (
-    <section
-      id="about"
-      className="section-anchor py-24 lg:py-32 relative"
-    >
-      <div className="max-w-6xl mx-auto px-6 lg:px-10">
+    <section className="section" id="about">
+      <div className="container-x">
         <SectionHeader
-          number="01"
-          title={ui.sections.about[lang]}
-          command="cat about.md"
+          num="01 — "
+          label={ui.sections.about[lang]}
+          title={ui.sections.aboutTitle[lang]}
+          subtitle={ui.sections.aboutSub[lang]}
         />
 
-        <div className="grid lg:grid-cols-12 gap-10">
-          {/* Left: paragraphs */}
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true, margin: "-100px" }}
-            transition={{ duration: 0.6, delay: 0.1 }}
-            className="lg:col-span-8 space-y-5 text-text-secondary leading-relaxed text-[15px] sm:text-base"
-          >
-            {about[lang].map((p, idx) => (
-              <p key={idx}>{p}</p>
-            ))}
-          </motion.div>
+        <div className="about-grid">
+          <aside className="about-aside reveal">
+            <span className="label">{ui.sections.aboutAsideLabel[lang]}</span>
+            <h3>{ui.sections.aboutAsideTitle[lang]}</h3>
+            <ul className="about-meta-list">
+              <li>
+                <span className="k">{ui.labels.role[lang]}</span>
+                <span className="v">{profile.role[lang]}</span>
+              </li>
+              <li>
+                <span className="k">{ui.labels.basedIn[lang]}</span>
+                <span className="v">{profile.location[lang]}</span>
+              </li>
+              <li>
+                <span className="k">{ui.labels.school[lang]}</span>
+                <span className="v">UIT — VNU-HCM</span>
+              </li>
+              <li>
+                <span className="k">GPA</span>
+                <span className="v">
+                  <span className="accent">8.5</span> / 10
+                </span>
+              </li>
+              <li>
+                <span className="k">{ui.labels.statusKey[lang]}</span>
+                <span className="v">
+                  <span className="accent">{ui.labels.statusValue[lang]}</span>
+                </span>
+              </li>
+            </ul>
+          </aside>
 
-          {/* Right: side card with quick facts */}
-          <motion.aside
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true, margin: "-100px" }}
-            transition={{ duration: 0.6, delay: 0.25 }}
-            className="lg:col-span-4"
-          >
-            <div className="border border-border bg-bg-surface/40 backdrop-blur-sm p-5 font-mono text-[12.5px]">
-              <div className="text-text-muted mb-3 text-[11px] uppercase tracking-wider">
-                — info.json
-              </div>
-              <div className="space-y-2.5">
-                <FactRow
-                  k="role"
-                  v={lang === "en" ? "Backend Dev" : "Backend Dev"}
-                />
-                <FactRow k="focus" v="Spring Boot · APIs" />
-                <FactRow
-                  k="university"
-                  v="UIT — VNU-HCM"
-                  vClass="text-accent"
-                />
-                <FactRow k="gpa" v="8.5 / 10" vClass="text-spring" />
-                <FactRow
-                  k="status"
-                  v={lang === "en" ? "seeking internship" : "tìm internship"}
-                  vClass="text-warning"
-                />
-              </div>
-            </div>
-          </motion.aside>
+          <div className="about-body">
+            {paras.map((p, i) => (
+              <p key={i} className="reveal">
+                {p}
+              </p>
+            ))}
+          </div>
         </div>
       </div>
     </section>
-  );
-}
-
-function FactRow({
-  k,
-  v,
-  vClass,
-}: {
-  k: string;
-  v: string;
-  vClass?: string;
-}) {
-  return (
-    <div className="flex items-baseline gap-2">
-      <span className="text-text-muted">{k}:</span>
-      <span className={`text-text-primary ${vClass ?? ""}`}>{`"${v}"`}</span>
-    </div>
   );
 }
